@@ -24,7 +24,46 @@ FFMPEG_REPO="${FFMPEG_REPO_OVERRIDE:-$FFMPEG_REPO}"
 GIT_BRANCH="${GIT_BRANCH:-master}"
 GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
 
-export FF_CONFIGURE="--disable-everything --enable-shared --disable-static --enable-gpl --enable-encoder=h264_* --enable-libx264 --enable-encoder=libx264 --enable-swscale --enable-pthreads --enable-libvpl --enable-amf --enable-encoder=aac"
+export FF_CONFIGURE_OVERRIDE="
+--enable-nonfree
+--enable-gpl 
+--enable-version3
+--disable-everything
+--enable-shared
+--disable-static
+
+--enable-avcodec
+--enable-avformat
+--enable-avutil
+--enable-swscale
+--enable-pthreads
+
+# CPU 编码
+--enable-libx264
+--enable-encoder=libx264
+--enable-libx265
+--enable-encoder=libx265
+
+# Intel QSV
+--enable-libvpl
+--enable-encoder=h264_qsv
+--enable-encoder=hevc_qsv
+
+# NVIDIA
+--enable-nvenc
+--enable-encoder=h264_nvenc
+--enable-encoder=hevc_nvenc
+
+# AMD AMF
+--enable-amf
+--enable-encoder=h264_amf
+--enable-encoder=hevc_amf
+
+# 音频
+--enable-encoder=aac
+--enable-decoder=aac
+"
+
 
 BUILD_SCRIPT="$(mktemp)"
 trap "rm -f -- '$BUILD_SCRIPT'" EXIT
@@ -37,7 +76,11 @@ cat <<EOF >"$BUILD_SCRIPT"
     git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
-    ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE \
+    echo "========== FINAL CONFIGURE =========="
+    echo ./configure --prefix=/ffbuild/prefix \$FFBUILD_TARGET_FLAGS \$FF_CONFIGURE
+    echo "====================================="
+
+    ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE_OVERRIDE \
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \
         --cc="\$CC" --cxx="\$CXX" --ar="\$AR" --ranlib="\$RANLIB" --nm="\$NM" \
