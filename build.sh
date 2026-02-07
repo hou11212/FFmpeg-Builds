@@ -39,13 +39,23 @@ cat <<EOF >"$BUILD_SCRIPT"
         \$FFBUILD_TARGET_FLAGS \\
         --enable-gpl \\
         --enable-version3 \\
-        --disable-everything \\
-        --enable-shared \\
-        --disable-static \\
-        --enable-avcodec \\
-        --enable-avformat \\
-        --enable-avutil \\
-        --enable-swscale \\
+    --disable-everything \\
+    --enable-shared \\
+    --disable-static \\
+    --enable-avcodec \\
+    --enable-avformat \\
+    --enable-avutil \\
+    --enable-swscale \\
+    --enable-libx264 \\
+    --enable-encoder=libx264 \\
+    --enable-libvpl \\
+    --enable-encoder=h264_qsv \\
+    --enable-nvenc \\
+    --enable-encoder=h264_nvenc \\
+    --enable-amf \\
+    --enable-encoder=h264_amf \\
+    --enable-encoder=aac \\
+    --enable-decoder=aac \\
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \\
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \\
         --cc="\$CC" --cxx="\$CXX" --ar="\$AR" --ranlib="\$RANLIB" --nm="\$NM" \\
