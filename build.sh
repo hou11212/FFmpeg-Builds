@@ -25,7 +25,6 @@ GIT_BRANCH="${GIT_BRANCH:-master}"
 GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
 
 export FF_CONFIGURE_OVERRIDE="
---enable-nonfree
 --enable-gpl
 --enable-version3
 --disable-everything
