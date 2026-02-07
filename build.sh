@@ -24,33 +24,6 @@ FFMPEG_REPO="${FFMPEG_REPO_OVERRIDE:-$FFMPEG_REPO}"
 GIT_BRANCH="${GIT_BRANCH:-master}"
 GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
 
-export FF_CONFIGURE_OVERRIDE="
---enable-gpl
---enable-version3
---disable-everything
---enable-shared
---disable-static
---enable-avcodec
---enable-avformat
---enable-avutil
---enable-swscale
---enable-libx264
---enable-encoder=libx264
---enable-libx265
---enable-encoder=libx265
---enable-libvpl
---enable-encoder=h264_qsv
---enable-encoder=hevc_qsv
---enable-nvenc
---enable-encoder=h264_nvenc
---enable-encoder=hevc_nvenc
---enable-amf
---enable-encoder=h264_amf
---enable-encoder=hevc_amf
---enable-encoder=aac
---enable-decoder=aac
-"
-
 BUILD_SCRIPT="$(mktemp)"
 trap "rm -f -- '$BUILD_SCRIPT'" EXIT
 
@@ -73,7 +46,6 @@ cat <<EOF >"$BUILD_SCRIPT"
     --enable-avformat \\
     --enable-avutil \\
     --enable-swscale \\
-    --enable-pthreads \\
     --enable-libx264 \\
     --enable-encoder=libx264 \\
     --enable-libx265 \\
