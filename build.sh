@@ -35,32 +35,17 @@ cat <<EOF >"$BUILD_SCRIPT"
     git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
-    eval ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \\
+    ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \\
         \$FFBUILD_TARGET_FLAGS \\
         --enable-gpl \\
-    --enable-version3 \\
-    --disable-everything \\
-    --enable-shared \\
-    --disable-static \\
-    --enable-avcodec \\
-    --enable-avformat \\
-    --enable-avutil \\
-    --enable-swscale \\
-    --enable-libx264 \\
-    --enable-encoder=libx264 \\
-    --enable-libx265 \\
-    --enable-encoder=libx265 \\
-    --enable-libvpl \\
-    --enable-encoder=h264_qsv \\
-    --enable-encoder=hevc_qsv \\
-    --enable-nvenc \\
-    --enable-encoder=h264_nvenc \\
-    --enable-encoder=hevc_nvenc \\
-    --enable-amf \\
-    --enable-encoder=h264_amf \\
-    --enable-encoder=hevc_amf \\
-    --enable-encoder=aac \\
-    --enable-decoder=aac \\
+        --enable-version3 \\
+        --disable-everything \\
+        --enable-shared \\
+        --disable-static \\
+        --enable-avcodec \\
+        --enable-avformat \\
+        --enable-avutil \\
+        --enable-swscale \\
         --extra-cflags="\$FF_CFLAGS" --extra-cxxflags="\$FF_CXXFLAGS" --extra-libs="\$FF_LIBS" \\
         --extra-ldflags="\$FF_LDFLAGS" --extra-ldexeflags="\$FF_LDEXEFLAGS" \\
         --cc="\$CC" --cxx="\$CXX" --ar="\$AR" --ranlib="\$RANLIB" --nm="\$NM" \\
