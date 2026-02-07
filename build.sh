@@ -34,7 +34,6 @@ export FF_CONFIGURE_OVERRIDE="
 --enable-avformat
 --enable-avutil
 --enable-swscale
---enable-pthreads
 --enable-libx264
 --enable-encoder=libx264
 --enable-libx265
